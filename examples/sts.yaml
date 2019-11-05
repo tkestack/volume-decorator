@@ -1,0 +1,41 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: csi-demo-sts
+  labels:
+    app: csi-demo-sts
+spec:
+  selector:
+    app: csi-demo-sts
+  ports:
+    - name: dummy
+      port: 12345
+
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: csi-demo-sts
+spec:
+  serviceName: csi-demo-sts
+  selector:
+    matchLabels:
+      app: csi-demo-sts
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: csi-demo-sts
+    spec:
+      containers:
+      - name: web-server
+        image: nginx
+        volumeMounts:
+        - name: mypvc
+          mountPath: /var/lib/www/html
+      volumes:
+      - name: mypvc
+        persistentVolumeClaim:
+          claimName: rbd-pvc
+          readOnly: false

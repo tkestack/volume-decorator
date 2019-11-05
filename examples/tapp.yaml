@@ -1,0 +1,22 @@
+apiVersion: tke.cloud.tencent.com/v1
+kind: TApp
+metadata:
+  name: csi-demo-tapp
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: csi-demo-tapp
+    spec:
+      containers:
+       - name: web-server
+         image: nginx
+         volumeMounts:
+           - name: mypvc
+             mountPath: /var/lib/www/html
+      volumes:
+       - name: mypvc
+         persistentVolumeClaim:
+           claimName: rbd-pvc
+           readOnly: false

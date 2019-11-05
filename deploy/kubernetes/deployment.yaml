@@ -1,0 +1,184 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: volume-manager
+  namespace: kube-system
+spec:
+  selector:
+    service: volume-manager
+  ports:
+  - protocol: TCP
+    port: 443
+    targetPort: 443
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ceph-config
+  namespace: kube-system
+data:
+  ceph.conf: |-
+    [global]
+    mon initial members          = a
+    mon host                     = 10.0.0.213:6789
+
+    auth_cluster_required = cephx
+    auth_service_required = cephx
+    auth_client_required = cephx
+
+    # Workaround for http://tracker.ceph.com/issues/23446
+    fuse_set_user_groups = false
+
+  ceph.client.admin.keyring: |-
+    [client.admin]
+      key = AQBTetJcJ9YMFBAAOwziON0kxDcwWFot6Qy2nw==
+      auid = 0
+      caps mds = "allow *"
+      caps mon = "allow *"
+      caps osd = "allow *"
+      caps mgr = "allow *"
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: volume-manager-webhook-config
+  namespace: kube-system
+data:
+  tls.cert: |-
+    -----BEGIN CERTIFICATE-----
+    MIIC8TCCAdmgAwIBAgIIP3LqDDDRi2gwDQYJKoZIhvcNAQELBQAwHTEbMBkGA1UE
+    AxMSZTJlLXNlcnZlci1jZXJ0LWNhMCAXDTE5MDUwOTA5MjkyN1oYDzIxMTkwNDE1
+    MDkyOTI3WjApMScwJQYDVQQDEx52b2x1bWUtbWFuYWdlci5rdWJlLXN5c3RlbS5z
+    dmMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCitWMJ4nRjmSPpdfEn
+    b3uxuZ6r4ErvaAy7+7oet4Olc2satl2i3S7aHDMpsqrIo27G3xOMSgikFuiuPQJ2
+    1szv7kD6pH1OuLM0yoxFMUGPh+ymNELnAgNYg3EzQ4s8pNulAac4zuwBFR1Ciael
+    cr4hSAkb86sYILmzmkvJmzIRwE8lVeHxR5IDwPK30+Lk+RPWNjyiC6HEfCIYLNI/
+    88Y5us744EylSXPC9KbHAO3hbKcjNenENIEWkc++MHqD+7TqtDW2G7mPem8R5fs8
+    khH/Z6rfw8un7Nxz67SY/oAapW+o5hruipLsNmPJnRI0uu2/LuZ72JewYToLVxqQ
+    np+5AgMBAAGjJzAlMA4GA1UdDwEB/wQEAwIFoDATBgNVHSUEDDAKBggrBgEFBQcD
+    ATANBgkqhkiG9w0BAQsFAAOCAQEAj9XYfpr8kr1rKSv4hJ24MZ9ejhPSrOxclkWA
+    24Bp2KzK3diDJidmr9krRfcUcSRq+eZArLyAtHycuEwba42fcKn4rg5bnp0skjjX
+    ARhPEt0FIPvtuI6hJEsqW2E/YzIj9B8I7RIR43XLBxhbUk6iXvGMAnQhkZNZGXcz
+    EukFNFtt4kInSYnYgZsiTOgmP5LZvm+gMegeBlGUR0fdFy5wEOpFtnASJ2Zzk0E9
+    VRE3bIOB6Uvd/zJPOxFK70HoAdlkY5U6K0KICSKWekQqTvmU/Vpq8M0pO/KhOjMN
+    Se0PmVifkJGnLTbkqWd6R9juJZDPmqhOOM0XSiNUBwKVC79JfA==
+    -----END CERTIFICATE-----
+
+  tls.key: |-
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEowIBAAKCAQEAorVjCeJ0Y5kj6XXxJ297sbmeq+BK72gMu/u6HreDpXNrGrZd
+    ot0u2hwzKbKqyKNuxt8TjEoIpBborj0CdtbM7+5A+qR9TrizNMqMRTFBj4fspjRC
+    5wIDWINxM0OLPKTbpQGnOM7sARUdQomnpXK+IUgJG/OrGCC5s5pLyZsyEcBPJVXh
+    8UeSA8Dyt9Pi5PkT1jY8oguhxHwiGCzSP/PGObrO+OBMpUlzwvSmxwDt4WynIzXp
+    xDSBFpHPvjB6g/u06rQ1thu5j3pvEeX7PJIR/2eq38PLp+zcc+u0mP6AGqVvqOYa
+    7oqS7DZjyZ0SNLrtvy7me9iXsGE6C1cakJ6fuQIDAQABAoIBAG11q3gF4ZjzeEZh
+    8uc9x7ArmMQ2MxNWI2L/mRl7CdRvjjk9QEcFl7RhzkWaDezGjgq6HhN95sxFISm+
+    n37FSL+MwCgeKrKf7Odx7+XImjtuDNVPSUbRguC0JJ6BLRWSLrWWJCJCimC8DKAr
+    rR3P0HrhVEd6qLqloWhjP+MURh3L+E2nyGUvvVKD1DhhbYQdEIM5pgb4ZjTIouDn
+    dL0L/R+kp4vfljBgwTVsXtqrvQ4FNJjhUNQ6jwoAToLJK5YbUwKbiMcaRfOr6ori
+    SLXWLHt6kB6mA2nr+gkg8u7YNGr2wVwT6Fu0OxKkCd1DeilF0b599w+XkVl4M20q
+    YuWylBECgYEA1bfs0YeB1pSEl+3UmNA6cLTGpLL/ZSaYz1xWokL1N5ULD9jNlU0r
+    SrbqEi9//1wOJeUaSova8xZX3Q7GMvAkyF+pH8TeCZd55FOvC23HTSxiQVUfBo0R
+    pAdHpx1ILlgqhg4TciOqQY/peYS8WluAF/cWzkrDlkkXKnDouU+AO2UCgYEAwuX9
+    /7nEUvUzdHVFkLaUDJdbn6oTkzl47ZCm+jZA0zgu0z3UkFBEkQcVx4mJJMQfpYbL
+    GxRyRWlPKuQXzwFWfaEEe0dE0rtyksZE5dTlMqkvfPCNN/rWXdE1WkNRu6IermLK
+    CkF7HOfr4ABjjtVVdR670L2DTJFNLfr7UDk+D8UCgYBCzWPLtqSB8xhi+OccAPJT
+    al4w+vZTorXfEwjNXUqS3haAFI9mHKHsj7IojwpeQmL1u1/1bzO4CgLayRRwtZl5
+    vFT75ihVLTDfirzLQLwsRjRMIZQ6EvwxnkjqVn/KZKqeDmZLphRAvAAJiNDrGXC3
+    jPdm8f2iyyPfkz1bNxto9QKBgQCsH+DFszNOrJzH0jYgyw5PXHEfvl3RXSWOcXz2
+    Z2my4OCB0Q5kcW9MwfwbID1NiiQE1NmVTeZppMq1L4JTYHQZOVYy5ctDbSaPt6jr
+    ba0Jo997sRqXAOHHM1eyItgRJOmBy19x1Ui8S5rGVrGWWJRDfmQSwvwtZ/nIjOrc
+    e+FynQKBgFKsXzgtD8lENtv0nm4bxo6vMpR7f4FhURx1QK2DA1du+dIJ1+EhGBZu
+    HkfUAtfS3a4O/USPKCKSZNUf7LoNZeOfpu/gcGSpq4Oqzhjj1pKXS7gZnZ2C4m25
+    ninOv5wTFAp3d3mG9eHtP7N51xS4Qo5BQ1ZYvODrp8UeExbE2Ebt
+    -----END RSA PRIVATE KEY-----
+
+  ca.cert: |-
+    -----BEGIN CERTIFICATE-----
+    MIIC2DCCAcCgAwIBAgIBADANBgkqhkiG9w0BAQsFADAdMRswGQYDVQQDExJlMmUt
+    c2VydmVyLWNlcnQtY2EwHhcNMTkwNTA5MDkyOTI3WhcNMjkwNTA2MDkyOTI3WjAd
+    MRswGQYDVQQDExJlMmUtc2VydmVyLWNlcnQtY2EwggEiMA0GCSqGSIb3DQEBAQUA
+    A4IBDwAwggEKAoIBAQC7X7HNHLEf256nC+rcbZSIURXvJwzIBd9Qox0GbTfBgFV1
+    eN8ZVINbQ/RiERrzEEiRIMlcUHfdGAT2+OXtD/veedtL9v6IWEgM/H95/x5abQin
+    XWFu8Sw8X+VBMSlcmLEzDLjcZIdT86OCr89ZNT9WLYDL5+7fTedk+nEMawjx1tdB
+    ADIw43n4/gbO8XYRn1WdKxJeUWr36Uoe9XjtmPcCrv/50UfQN/kffAYdzwB13bhJ
+    XRSkw+J4CRunf/A/tHQwg8R5Gkx4IC3xpLbopVJafou3zuHj0U0wXwanXDIcUnEg
+    XznMTRcUQKfYTFZlna4dujmzqr/r08NrX7kmyf0bAgMBAAGjIzAhMA4GA1UdDwEB
+    /wQEAwICpDAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCEQ8qC
+    rFgbezIBkZvM2TBuU+6509bKa5aOwpfSjgj/druXp3jglzHJarIGFioHhuQ1lXrx
+    sLxkcYTLUPhvnXrDGTi9zyboscYXzavgLA8eEXxPeR4hJ6+sl0xJz4GrHLKIkenu
+    bZW9nyYOcXGyBSum5yLTtmuha/vXN1cz2Brjwc3VDNSiKtZLdbZil9tlX6SEiJoM
+    iB3zzg+usOhD8dxPjZmxz8IQRuppEYGzBcAAv2EDjCE4K2AEqMVQs+rojZUtggh4
+    KUGyxLsaEbdpED79JLZl/JFVBfjPRgWIjXUrJO9ozwZUgs42h1onDrJs60rZ+LAo
+    DDdfmqfdbbXGDVl2
+    -----END CERTIFICATE-----
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: volume-manager
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: volume-manager
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: volume-manager
+        service: volume-manager
+    spec:
+      serviceAccount: volume-manager
+      hostNetwork: true
+      containers:
+        - name: volume-manager
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
+          image: volume-manager:latest
+          args:
+            - "--leader-election=true"
+            - "--client-ca-file=/webhook/ca.cert"
+            - "--tls-cert-file=/webhook/tls.cert"
+            - "--tls-private-key-file=/webhook/tls.key"
+            - "--logtostderr=true"
+            - "--v=5"
+          imagePullPolicy: "IfNotPresent"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "umount /tmp/cephfs-root"]
+          volumeMounts:
+            - mountPath: /dev
+              name: host-dev
+            - mountPath: /sys
+              name: host-sys
+            - mountPath: /lib/modules
+              name: lib-modules
+              readOnly: true
+            - mountPath: /etc/ceph
+              name: ceph-config
+            - mountPath: /webhook
+              name: webhook-config
+      volumes:
+        - name: host-dev
+          hostPath:
+            path: /dev
+        - name: host-sys
+          hostPath:
+            path: /sys
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+        - name: ceph-config
+          configMap:
+            name: ceph-config
+        - name: webhook-config
+          configMap:
+            name: volume-manager-webhook-config
