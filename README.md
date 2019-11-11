@@ -10,6 +10,15 @@ Controller that maintains more runtime information for Kubernetes volume(PVC), s
 - Collect current mounted nodes of a volume.
 - Collect real usage bytes of a volume.
 
+## Prerequisites
+These build instructions assume you have a Linux build environment with:
+
+-  Docker
+-  git
+-  make
+-  golang  version > 1.11, with GO111MODULE=on
+-  revive  `go get -u github.com/mgechev/revive`
+
 ## Build
 
 To make the binary, just run:
