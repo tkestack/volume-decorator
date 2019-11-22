@@ -97,6 +97,7 @@ github.com/stretchr/testify v0.0.0-20151208002404-e3a8ff8ce365/go.mod h1:a8OnRci
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
+github.com/tkestack/tapp v0.0.0-20191112021625-dbdaf5a5314c/go.mod h1:+5/Z0Olq+gCHCv237yoWaCbmuqcLmu2GzyK6pdfEJII=
 go.uber.org/atomic v1.3.2 h1:2Oa65PReHzfn29GpvgsYwloV9AVFHPDk8tYxt2c2tr4=
 go.uber.org/atomic v1.3.2/go.mod h1:gD2HeocX3+yG+ygLZcrzQJaqmWj9AIm7n08wl/qW/PE=
 go.uber.org/multierr v1.1.0 h1:HoEmRHQPVSqub6w2z2d2EOVs2fjyFRGyofhKuyDq0QI=
@@ -175,3 +176,5 @@ sigs.k8s.io/yaml v1.1.0 h1:4A07+ZFc2wgJwo8YNlQpr1rVlgUDlxXHhPJciaPY5gs=
 sigs.k8s.io/yaml v1.1.0/go.mod h1:UJmg0vDUVViEyp3mgSv9WPwZCDxu4rQW1olrI1uml+o=
 tkestack.io/tapp v0.0.0-20191105143848-5edda2f9f6c7 h1:9WQF7Ksd+9bZi+XCMG3bmZxWRqqGiX7I8f6bqUH0cXk=
 tkestack.io/tapp v0.0.0-20191105143848-5edda2f9f6c7/go.mod h1:6mve1e1+4G5LyNg1gSaInWfBOd0Su4Z7BP7tlPRpEuA=
+tkestack.io/tapp v0.0.0-20191112021625-dbdaf5a5314c h1:gl7jPs4uJ4GGhEYxW6QPge8dZf6R5RAIA9+hPcgAJoQ=
+tkestack.io/tapp v0.0.0-20191112021625-dbdaf5a5314c/go.mod h1:6mve1e1+4G5LyNg1gSaInWfBOd0Su4Z7BP7tlPRpEuA=

@@ -41,5 +41,5 @@ require (
 	sigs.k8s.io/controller-runtime v0.1.10
 	sigs.k8s.io/testing_frameworks v0.1.1 // indirect
 	sigs.k8s.io/yaml v1.1.0 // indirect
-	github.com/tkestack/tapp master
+	tkestack.io/tapp v0.0.0-20191112021625-dbdaf5a5314c
 )
