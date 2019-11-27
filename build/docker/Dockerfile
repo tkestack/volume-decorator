@@ -7,6 +7,6 @@ RUN yum  install -y centos-release-ceph && \
     yum clean all && \
     unset http_proxy && unset https_proxy
 
-COPY volume-manager /volume-manager
-RUN chmod +x /volume-manager
-ENTRYPOINT ["/volume-manager"]
+COPY volume-decorator /volume-decorator
+RUN chmod +x /volume-decorator
+ENTRYPOINT ["/volume-decorator"]

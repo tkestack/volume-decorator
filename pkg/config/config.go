@@ -67,7 +67,7 @@ type WebhookConfig struct {
 
 // AddFlags adds webhook related configurations to the global flags.
 func (c *WebhookConfig) AddFlags() {
-	flag.StringVar(&c.Name, "webhook-name", "volume-manager", "Name of the webhook")
+	flag.StringVar(&c.Name, "webhook-name", "volume-decorator", "Name of the webhook")
 	flag.StringVar(&c.ValidatingPath, "workload-webhook-path",
 		"/tke/storage/workload", "Path of the workload webhook")
 	flag.StringVar(&c.CertFile, "tls-cert-file", c.CertFile, ""+
@@ -79,7 +79,7 @@ func (c *WebhookConfig) AddFlags() {
 	flag.StringVar(&c.URL, "webhook-url", "",
 		"URL of the webhook service, will be used if the service running out of cluster")
 	flag.StringVar(&c.ServiceName, "service-name",
-		"volume-manager", "Name of the webhook service, will be used if the service running in the cluster")
+		"volume-decorator", "Name of the webhook service, will be used if the service running in the cluster")
 	flag.StringVar(&c.ServiceNamespace, "service-namespace", "kube-system",
 		"Namespace the webhook service running, will be used if the service running in the cluster")
 	flag.BoolVar(&c.WorkloadAdmission, "workload-admission", false, "Enable workload admission")

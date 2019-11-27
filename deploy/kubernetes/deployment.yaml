@@ -1,11 +1,11 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: volume-manager
+  name: volume-decorator
   namespace: kube-system
 spec:
   selector:
-    service: volume-manager
+    service: volume-decorator
   ports:
   - protocol: TCP
     port: 443
@@ -43,7 +43,7 @@ data:
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: volume-manager-webhook-config
+  name: volume-decorator-webhook-config
   namespace: kube-system
 data:
   tls.cert: |-
@@ -119,29 +119,29 @@ data:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: volume-manager
+  name: volume-decorator
   namespace: kube-system
 spec:
   selector:
     matchLabels:
-      app: volume-manager
+      app: volume-decorator
   replicas: 1
   template:
     metadata:
       labels:
-        app: volume-manager
-        service: volume-manager
+        app: volume-decorator
+        service: volume-decorator
     spec:
-      serviceAccount: volume-manager
+      serviceAccount: volume-decorator
       hostNetwork: true
       containers:
-        - name: volume-manager
+        - name: volume-decorator
           securityContext:
             privileged: true
             capabilities:
               add: ["SYS_ADMIN"]
             allowPrivilegeEscalation: true
-          image: volume-manager:latest
+          image: volume-decorator:latest
           args:
             - "--leader-election=true"
             - "--client-ca-file=/webhook/ca.cert"
@@ -181,4 +181,4 @@ spec:
             name: ceph-config
         - name: webhook-config
           configMap:
-            name: volume-manager-webhook-config
+            name: volume-decorator-webhook-config

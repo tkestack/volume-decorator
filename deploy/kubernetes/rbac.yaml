@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: volume-manager
+  name: volume-decorator
   namespace: kube-system
 
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: volume-manager-role
+  name: volume-decorator-role
 rules:
   - apiGroups: ["storage.tke.cloud.tencent.com"]
     resources: ["persistentvolumeclaimruntimes"]
@@ -49,12 +49,12 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: volume-manager-role-binding
+  name: volume-decorator-role-binding
 subjects:
   - kind: ServiceAccount
-    name: volume-manager
+    name: volume-decorator
     namespace: kube-system
 roleRef:
   kind: ClusterRole
-  name: volume-manager-role
+  name: volume-decorator-role
   apiGroup: rbac.authorization.k8s.io

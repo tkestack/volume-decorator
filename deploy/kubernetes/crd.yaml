@@ -3,9 +3,9 @@ kind: CustomResourceDefinition
 metadata:
   labels:
     storage.tke.cloud.tencent.com: "0.1"
-  name: persistentvolumeclaimruntimes.storage.tke.cloud.tencent.com
+  name: persistentvolumeclaimruntimes.storage.tkestack.io
 spec:
-  group: storage.tke.cloud.tencent.com
+  group: storage.tkestack.io
   names:
     kind: PersistentVolumeClaimRuntime
     plural: persistentvolumeclaimruntimes

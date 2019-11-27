@@ -40,7 +40,7 @@ func newWebhook(webhookCfg *config.WebhookConfig) (*v1beta1.ValidatingWebhookCon
 	}
 
 	failurePolicy := v1beta1.Fail
-	webhook := v1beta1.Webhook{
+	webhook := v1beta1.ValidatingWebhook{
 		Name: webhookCfg.Name + ".storage.tke.cloud.tencent.com",
 		Rules: []v1beta1.RuleWithOperations{
 			{
@@ -96,7 +96,7 @@ func newWebhook(webhookCfg *config.WebhookConfig) (*v1beta1.ValidatingWebhookCon
 		ObjectMeta: metav1.ObjectMeta{
 			Name: webhookCfg.Name,
 		},
-		Webhooks: []v1beta1.Webhook{webhook},
+		Webhooks: []v1beta1.ValidatingWebhook{webhook},
 	}
 
 	return validatingWebhook, nil

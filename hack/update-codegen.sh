@@ -19,18 +19,15 @@ set -o nounset
 set -o pipefail
 
 SCRIPT_ROOT=$(dirname ${BASH_SOURCE})/..
-CODEGEN_PKG=${CODEGEN_PKG:-$(go list -f '{{ .Dir }}' -m k8s.io/code-generator)}
-TMP_CODEGEN_PKG="./tmp-code-generator"
-cp -R ${CODEGEN_PKG} ${TMP_CODEGEN_PKG}
 
-function cleanup() {
-    sudo rm -rf ${TMP_CODEGEN_PKG}
-}
+go mod vendor
 
-trap cleanup EXIT SIGINT SIGTERM
+CODEGEN_PKG="./vendor/k8s.io/code-generator"
 
-chmod +x ${TMP_CODEGEN_PKG}/generate-groups.sh
-${TMP_CODEGEN_PKG}/generate-groups.sh all \
+trap EXIT SIGINT SIGTERM
+
+chmod +x ${CODEGEN_PKG}/generate-groups.sh
+${CODEGEN_PKG}/generate-groups.sh all \
   tkestack.io/volume-decorator/pkg/generated tkestack.io/volume-decorator/pkg/apis \
   storage:v1 \
   --go-header-file ${SCRIPT_ROOT}/hack/boilerplate.go.txt

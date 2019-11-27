@@ -56,7 +56,7 @@ func (in *PersistentVolumeClaimRuntime) DeepCopyObject() runtime.Object {
 func (in *PersistentVolumeClaimRuntimeList) DeepCopyInto(out *PersistentVolumeClaimRuntimeList) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
-	out.ListMeta = in.ListMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
 	if in.Items != nil {
 		in, out := &in.Items, &out.Items
 		*out = make([]PersistentVolumeClaimRuntime, len(*in))

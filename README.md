@@ -24,18 +24,10 @@ These build instructions assume you have a Linux build environment with:
 To make the binary, just run:
 
 ```bash
-make volume-manager
+make volume-decorator
 ```
 
-The binary will be located at `output/bin/volume-manager`.
-
-To release the image, just run:
-
-```bash
-make volume-manager-image
-```
-
-Then a image with name `volume-manager:latest` will be created.
+The binary will be located at `output/bin/volume-decorator`.
 
 ## Usage
 
