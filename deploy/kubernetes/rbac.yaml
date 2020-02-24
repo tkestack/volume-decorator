@@ -10,7 +10,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: volume-decorator-role
 rules:
-  - apiGroups: ["storage.tke.cloud.tencent.com"]
+  - apiGroups: ["storage.tkestack.io"]
     resources: ["persistentvolumeclaimruntimes"]
     verbs: ["get", "list", "watch", "create", "update", "delete"]
   - apiGroups: ["apps"]
@@ -22,7 +22,7 @@ rules:
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list", "watch"]
-  - apiGroups: ["tke.cloud.tencent.com"]
+  - apiGroups: ["tkestack.io"]
     resources: ["tapps"]
     verbs: ["get", "list", "watch"]
   - apiGroups: [""]

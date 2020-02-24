@@ -19,5 +19,5 @@ package storage
 
 const (
 	// GroupName for storage APIs.
-	GroupName = "storage.tke.cloud.tencent.com"
+	GroupName = "storage.tkestack.io"
 )

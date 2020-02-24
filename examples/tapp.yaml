@@ -1,4 +1,4 @@
-apiVersion: tke.cloud.tencent.com/v1
+apiVersion: tkestack.io/v1
 kind: TApp
 metadata:
   name: csi-demo-tapp

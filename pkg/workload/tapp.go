@@ -81,7 +81,7 @@ func (m *tappManager) Handle(
 	}
 
 	ref := corev1.ObjectReference{
-		APIVersion: "tke.cloud.tencent.com/v1",
+		APIVersion: "tkestack.io/v1",
 		Kind:       "TApp",
 		Name:       tapp.Name,
 		Namespace:  tapp.Namespace,

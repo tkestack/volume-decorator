@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   labels:
-    storage.tke.cloud.tencent.com: "0.1"
+    storage.tkestack.io: "0.1"
   name: persistentvolumeclaimruntimes.storage.tkestack.io
 spec:
   group: storage.tkestack.io

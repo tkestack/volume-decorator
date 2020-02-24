@@ -41,7 +41,7 @@ func newWebhook(webhookCfg *config.WebhookConfig) (*v1beta1.ValidatingWebhookCon
 
 	failurePolicy := v1beta1.Fail
 	webhook := v1beta1.ValidatingWebhook{
-		Name: webhookCfg.Name + ".storage.tke.cloud.tencent.com",
+		Name: webhookCfg.Name + ".storage.tkestack.io",
 		Rules: []v1beta1.RuleWithOperations{
 			{
 				Operations: []v1beta1.OperationType{v1beta1.Create, v1beta1.Update},
@@ -70,7 +70,7 @@ func newWebhook(webhookCfg *config.WebhookConfig) (*v1beta1.ValidatingWebhookCon
 			{
 				Operations: []v1beta1.OperationType{v1beta1.Create, v1beta1.Update},
 				Rule: v1beta1.Rule{
-					APIGroups:   []string{"tke.cloud.tencent.com"},
+					APIGroups:   []string{"tkestack.io"},
 					APIVersions: []string{"v1"},
 					Resources:   []string{"tapps"},
 				},
