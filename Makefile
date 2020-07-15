@@ -14,9 +14,9 @@
 # specific language governing permissions and limitations under the License.
 #
 
-REGISTRY_NAME=docker.io/tkestack
+REGISTRY_NAME?=docker.io/tkestack
 
-IMAGE_TAGS=
+IMAGE_TAGS?=v1.0.1
 
 # A "canary" image gets built if the current commit is the head of the remote "master" branch.
 # That branch does not exist when building some other branch in TravisCI.
@@ -31,7 +31,11 @@ IMAGE_TAGS+=$(shell git branch -r --points-at=HEAD | grep 'origin/release-' | gr
 IMAGE_TAGS+=$(shell tagged="$$(git describe --tags --match='v*' --abbrev=0)"; if [ "$$tagged" ] && [ "$$(git rev-list -n1 HEAD)" = "$$(git rev-list -n1 $$tagged)" ]; then echo $$tagged; fi)
 
 # Images are named after the command contained in them.
-IMAGE_NAME=$(REGISTRY_NAME)/volume-decorator
+ifeq ($(GOARCH),arm64)
+	IMAGE_NAME=$(REGISTRY_NAME)/volume-decorator-$(GOARCH)
+else
+	IMAGE_NAME=$(REGISTRY_NAME)/volume-decorator
+endif
 
 all: test volume-decorator
 

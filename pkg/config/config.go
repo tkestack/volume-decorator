@@ -20,10 +20,7 @@ package config
 import (
 	"crypto/tls"
 	"flag"
-	"strings"
 	"time"
-
-	"tkestack.io/volume-decorator/pkg/types"
 
 	"k8s.io/klog"
 )
@@ -120,8 +117,7 @@ type VolumeConfig struct {
 
 // AddFlags adds volume related configurations to the global flags.
 func (c *VolumeConfig) AddFlags() {
-	flag.StringVar(&c.Types, "volume-types", strings.Join([]string{types.CephRBD, types.CephFS}, ","),
-		"Volume types the cluster supported")
+	flag.StringVar(&c.Types, "volume-types", "", "Volume types the cluster supported")
 	flag.StringVar(&c.CephConfig.ConfigFile, "ceph-config-file",
 		"/etc/ceph/ceph.conf", "Path of ceph config file")
 	flag.StringVar(&c.CephConfig.KeryingFile, "ceph-keyring-file",
